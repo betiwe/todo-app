@@ -15,10 +15,12 @@ const getTodos = async (req, res) => {
 
 const createTodo = async (req, res) => {
   const { text } = req.body;
-  const todo = new Todo({ text });
+  console.log('В todoController 2', text);
 
   try {
+    const todo = new Todo({ text });
     const newTodo = await todo.save();
+    console.log('В todoController 2', newTodo);
     res.status(201).json(newTodo);
   } catch (err) {
     res.status(400).json({ message: err.message });

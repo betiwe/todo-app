@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
+import axios from 'axios'
 
 const AddTodo = ({ onAdd }) => {
   const [text, setText] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (text.trim()) {
-      onAdd(text);
-      setText('');
+      try {
+        const response = await axios.post('http://localhost:5000/api/todos', { text });
+        console.log('В AppTodo.jsx',response.data);
+        onAdd(response.data);
+        setText('');
+      } catch (err) {
+        console.err('Error adding todo', err)
+      }
     }
   };
 
